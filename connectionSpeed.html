@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Signal strength</title>
+	<style type="text/css">
+		body{
+			width: 100vw;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
+		#wrapper{
+			width: 10vw;
+			height: 40vh;
+			margin-top: 30px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center; 
+		}
+		#top{
+			width: 80%;
+			height: 10px;
+			margin: 5px;
+			background: blue;
+		}
+		#middle{
+			width: 60%;
+			height: 10px;
+			margin: 5px;
+			background: blue;
+		}
+		#bottom{
+			width: 35%;
+			height: 10px;
+			margin: 5px;
+			background: blue;
+		}
+		#base{
+			width: 20%;
+			height: 10%;
+			margin: 5px;
+			background: blue;
+			border-radius: 50%;
+		}
+		h2{
+			font-family: arial;	
+		}
+		h3{
+			text-align: center;
+			font-family: arial;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="top"></div>
+		<div id="middle"></div>
+		<div id="bottom"></div>
+		<div id="base"></div>
+	</div>
+	<div>
+		<h2>Connection speed:</h2>
+		<h3>result</h3>
+	</div>
+	<script type="text/javascript">
+
+		var getResult = document.querySelector("h3");
+		var getTop = document.getElementById("top");
+		var getMiddle = document.getElementById("middle");
+		var getBottom = document.getElementById("bottom");
+
+		var userImageLink = "https://upload.wikimedia.org/wikipedia/commons/1/1a/24701-nature-natural-beauty.jpg";
+            var time_start, end_time;
+            
+            // The size in bytes
+            var downloadSize = 267043; 
+            var downloadImgSrc = new Image();
+  
+            downloadImgSrc.onload = function () {
+                end_time = new Date().getTime();
+                displaySpeed();
+            };
+            time_start = new Date().getTime();
+            downloadImgSrc.src = userImageLink;
+            //document.write("time start: " + time_start);
+            //document.write("<br>");
+
+            function displaySpeed() {
+                var timeDuration = (end_time - time_start) / 1000;
+                var loadedBits = downloadSize * 8;
+                
+                /* Converts a number into string
+                   using toFixed(2) rounding to 2 */
+                var bps = (loadedBits / timeDuration).toFixed(2);
+                var speedInKbps = (bps / 1024).toFixed(2);
+                var speedInMbps = (speedInKbps / 1024 * 2).toFixed(2);
+
+                getResult.innerHTML = speedInMbps + " Mbps"; 
+
+                if(speedInMbps < 30){
+                	getTop.style.display = "none"; 
+                }else if(speedInMbps < 20){
+                	getTop.style.display = "none";
+                	getMiddle.style.display = "none";
+                }else if(speedInMbps < 10){
+                	getTop.style.display = "none"; 
+                	getMiddle.style.display = "none";
+                	getBottom.style.display = "none"; 
+                }
+            }
+	</script>
+</body>
+</html>
